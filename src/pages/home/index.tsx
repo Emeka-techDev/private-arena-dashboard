@@ -84,7 +84,7 @@ const stats: Stat[] = [
   { label: "COMPLETED", value: "1,704", sub: "60% of participants", color: "text-emerald-500" },
   { label: "IN PROGRESS", value: "739", sub: "26% of participants", color: "text-amber-500" },
   { label: "ABANDONED", value: "398", sub: "14% of participants", color: "text-slate-700" },
-  { label: "AVG. COMPLETION TIME", value: "6.4", unit: "min", sub: "Across completions", color: "text-slate-800" },
+  { label: "AVG. COMPLETION TIME", value: "6.4", unit: "min", sub: "Across completions", color: "text-slate-700" },
 ];
 
 const funnelData: FunnelItem[] = [
