@@ -10,8 +10,8 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: "dark",
-  isDark: true,
+  theme: "light",
+  isDark: false,
   toggleTheme: () => {},
 });
 
@@ -20,7 +20,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     try {
       return (localStorage.getItem("odditor-theme") as Theme) || "light";
     } catch {
-      return "dark";
+      return "light";
     }
   });
 
