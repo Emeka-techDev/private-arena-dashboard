@@ -11,12 +11,14 @@
   },
   "dependencies": {
     "@fontsource/montserrat": "^5.2.5",
+    "axios": "^1.13.6",
     "clsx": "^2.1.1",
     "lucide-react": "^1.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.6.0",
-    "react-router-dom": "^7.6.0"
+    "react-router-dom": "^7.6.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

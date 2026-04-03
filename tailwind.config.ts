@@ -40,7 +40,7 @@ const config: Config = {
           blue20: '#D9DDFA',
           blue50: '#367ef3',
           blue70: '#243bc1',
-        },
+        }, 
         secondary: {
           transparentBlack30: '#0000004D',
           transparentBlack50: '#00000080',

@@ -4,9 +4,9 @@ import { SmallGrayDot, UserIcon } from '@/components/svg/AuthIcons';
 import { PasswordInput } from '@/components/input/PasswordInput';
 import { Button } from '@/components/button/Button';
 import blueLogo from '../../assets/logos/arenalogo_blue.png';
-import { passwordValidations } from './SignUp';
 import clsx from 'clsx';
 import { useNavigate } from 'react-router';
+import { passwordValidations } from '@/utils';
 
 export const ResetPassword = () => {
   const navigate = useNavigate();

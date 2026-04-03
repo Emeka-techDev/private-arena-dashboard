@@ -18,7 +18,7 @@ const ThemeContext = createContext<ThemeContextType>({
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     try {
-      return (localStorage.getItem("odditor-theme") as Theme) || "dark";
+      return (localStorage.getItem("odditor-theme") as Theme) || "light";
     } catch {
       return "dark";
     }
