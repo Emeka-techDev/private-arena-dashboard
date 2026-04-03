@@ -2,7 +2,7 @@ import blueLogo from '../../assets/logos/arenalogo_blue.png';
 
 import AvatarImage from '../../assets/homepage/AvatarImg.png';
 import { Bell, CheveronDown } from '../svg/HomepageIcons';
-import { useTheme } from '@/context/ThemeContext';
+// import { useTheme } from '@/context/ThemeContext';
 
 
 interface NavBarProps {
