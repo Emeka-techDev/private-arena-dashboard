@@ -1,4 +1,4 @@
-import { changePasswordRequest, loginUserRequest, signUpUserRequest } from "@/utils/types";
+import {changePasswordRequest, loginUserRequest, signUpUserRequest } from "@/utils/types";
 import axios from "axios";
 
 const api = axios.create({

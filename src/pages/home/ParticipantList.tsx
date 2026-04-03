@@ -1,4 +1,4 @@
-import { getCampaignParticipantsData, getParticipantsData } from "@/apis/api";
+import { getCampaignParticipantsData } from "@/apis/api";
 import { useTheme } from "@/context/ThemeContext";
 import { ParticipantsProps } from "@/utils/types";
 import { useEffect, useState } from "react";

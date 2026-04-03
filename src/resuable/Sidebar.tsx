@@ -14,7 +14,7 @@ const Sidebar = ({ mobileOpen = false, onMobileClose}: SideBarProps)  => {
     const [collapsed, setCollapsed] = useState(false);
     const { isDark, toggleTheme }   = useTheme();
     const textSec     = isDark ? "text-[#8B91A8]"  : "text-[#1E2235]";
-    const btnBg    = isDark ? "bg-bgColor3 border-white/[0.08]" : "bg-[#E8EAF0] border-[#C5C9D6]/60";
+    // const btnBg    = isDark ? "bg-bgColor3 border-white/[0.08]" : "bg-[#E8EAF0] border-[#C5C9D6]/60";
   
     
     const handleMobileSideBarClose = () => {
@@ -26,8 +26,8 @@ const Sidebar = ({ mobileOpen = false, onMobileClose}: SideBarProps)  => {
         localStorage.removeItem("authToken");
         window.location.href = '/login';
     }
-    const toggleBg    = isDark ? "bg-[#1C2130] border-white/[0.1]"                    : "bg-[#E8EAF0] border-[#C5C9D6]/70";
-	const textMut     = isDark ? "text-[#4A5070]"                                      : "text-[#8890A8]";
+    // const toggleBg    = isDark ? "bg-[#1C2130] border-white/[0.1]"                    : "bg-[#E8EAF0] border-[#C5C9D6]/70";
+	// const textMut     = isDark ? "text-[#4A5070]"                                      : "text-[#8890A8]";
 	
     return (
         <div className={`${mobileOpen ? 'flex' : 'hidden'} md:flex fixed  z-50 max-w-[240px]  min-h-screen bg-primary-main  text-primary-white flex-col  justify-between`}>

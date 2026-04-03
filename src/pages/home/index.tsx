@@ -1,8 +1,7 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import ParticipantList from "./ParticipantList";
 import { useTheme } from "@/context/ThemeContext";
-import { getCampaignCardData, getCardData} from "@/apis/api";
-import { SvgIcon } from "@/utils/SvgIcons";
+import { getCampaignCardData} from "@/apis/api";
 import { AnimatedNumberProps } from "@/utils/types";
 import { useParams } from "react-router";
 

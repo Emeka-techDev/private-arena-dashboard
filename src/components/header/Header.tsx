@@ -10,7 +10,7 @@ interface NavBarProps {
 }
 
 export const Header = ({ onMobileMenuOpen }: NavBarProps) => {
-    const { isDark, toggleTheme }   = useTheme();
+    const { isDark }   = useTheme();
 
     const textSec     = isDark ? "text-[#8B91A8]"  : "text-[#1E2235]";
 	const btnBg    = isDark ? "bg-bgColor3 border-white/[0.08]" : "bg-[#E8EAF0] border-[#C5C9D6]/60";

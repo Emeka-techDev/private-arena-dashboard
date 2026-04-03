@@ -53,3 +53,9 @@ export interface ParticipantsProps {
     location: string,
     date_joined: string
 }
+
+export interface changePasswordRequest {
+    old_password: string;
+    password: string;
+    password_confirmation: string;
+}
