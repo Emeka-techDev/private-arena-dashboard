@@ -16,7 +16,8 @@ export const Header = ({ onMobileMenuOpen }: NavBarProps) => {
 	// const btnBg    = isDark ? "bg-bgColor3 border-white/[0.08]" : "bg-[#E8EAF0] border-[#C5C9D6]/60";
   
 	return (
-		<nav className='flex justify-between items-center z-40 min-w-full  bg-primary-white px-[60px] py-[21px] sticky top-0'>
+		
+		<nav className='flex justify-between items-center z-40 min-w-full  bg-primary-white px-[10px] md:px-[60px] py-[21px] sticky top-0'>
 			<img src={blueLogo} alt='arena logo' className='hidden md:block h-8' />
 
 			<button
