@@ -13,12 +13,15 @@ import { Button } from '@/components/button/Button';
 import blueLogo from '../../assets/logos/arenalogo_blue.png';
 import { loginUser } from '@/apis/api';
 import { useAuth } from '@/context/AuthContext';
+import { useState } from 'react';
 
 const SignIn = () => {
 	const navigate = useNavigate();
 	const { email, setEmail, password, setPassword, setToken } = useAuth();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const handleLogin = async () => {
+	 setIsLoading(true);
 		try {
 			const response = await loginUser({ email, password });
 			// console.log(response.success);
@@ -26,8 +29,10 @@ const SignIn = () => {
 				setToken(response.data.token);
 				navigate('/home');
 			}
+			setIsLoading(false);
 		} catch (e) {
 			console.error('Login failed:', e);
+			setIsLoading(false);
 		}
 	};
 	
@@ -85,7 +90,8 @@ const SignIn = () => {
 					onClick={handleLogin}
 					buttonClass='default_button hover:bg-primary-blue70'
 				>
-					<span>Sign In</span>
+					<span>{ !isLoading ? 'Sign in' : 'Loading...'}</span>
+					
 				</Button>
 				</div>
 				<div className='flex items-center justify-center gap-4 mt-[30px] mb-6 w-full'>
