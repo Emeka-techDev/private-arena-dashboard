@@ -14,6 +14,7 @@ import blueLogo from '../../assets/logos/arenalogo_blue.png';
 import { loginUser } from '@/apis/api';
 import { useAuth } from '@/context/AuthContext';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const SignIn = () => {
 	const navigate = useNavigate();
@@ -30,9 +31,10 @@ const SignIn = () => {
 				navigate('/home');
 			}
 			setIsLoading(false);
-		} catch (e) {
-			console.error('Login failed:', e);
+		} catch (e : any) {
+			// console.error('Login failed:', e);
 			setIsLoading(false);
+			toast.error(e.response?.data?.message || 'Login failed. Please try again.');
 		}
 	};
 	
