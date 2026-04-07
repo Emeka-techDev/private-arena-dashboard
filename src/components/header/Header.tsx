@@ -1,4 +1,4 @@
-import blueLogo from '../../assets/logos/arenalogo_blue.png';
+// import blueLogo from '../../assets/logos/arenalogo_blue.png';
 
 import AvatarImage from '../../assets/homepage/AvatarImg.png';
 import { Bell, CheveronDown } from '../svg/HomepageIcons';
