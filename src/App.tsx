@@ -9,12 +9,13 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 
 import { Bounce, ToastContainer } from "react-toastify";
-import Dashboard from './pages/home/Dashboard';
+// import Dashboard from './pages/home/Dashboard';
 import BrandCampaigns from './pages/home/BrandCampaigns';
 import { AppLayout } from './layout/AppLayout';
 import Brands from './pages/home/Brands';
 import Settings from './pages/settings/Settings';
 import { Home } from './pages/home';
+import CustomDashboard from './pages/home/CustomDashboard';
 
 function App() {
   return (
@@ -55,11 +56,22 @@ function App() {
 						index
 						element={
 							<ProtectedRoute>
-								<Dashboard />
+								<CustomDashboard />
 								{/* <Home /> */}
 							</ProtectedRoute>
 						}
 					/>
+					
+					{/* <Route
+						index
+						element={
+							<ProtectedRoute>
+								<Dashboard />
+							</ProtectedRoute>
+						}
+					/> */}
+
+					
 
 					<Route
 						path="campaign/:id/title/:title"
