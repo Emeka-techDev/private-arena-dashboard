@@ -11,6 +11,12 @@ export interface CreateUserRequest {
 // referralUsername?: string ;
 }
 
+export interface CampaignDropDownProps {
+    id: string;
+    title: string;
+    
+}
+
 export interface BrandProps {
 	id : string;
 	name : string;
