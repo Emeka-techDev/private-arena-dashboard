@@ -2,9 +2,9 @@ import AuthLayout from '@/layout/auth/AuthLayout';
 import mainLogo from '../../assets/logos/arenalogo.svg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
-  AppleIcon,
-  FacebookIcon,
-  GoogleIcon,
+//   AppleIcon,
+//   FacebookIcon,
+//   GoogleIcon,
   UserIcon,
 } from '@/components/svg/AuthIcons';
 import { BasicInput } from '@/components/input/BasicInput';
