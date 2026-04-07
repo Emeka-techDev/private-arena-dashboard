@@ -96,7 +96,7 @@ const SignIn = () => {
 					
 				</Button>
 				</div>
-				<div className='flex items-center justify-center gap-4 mt-[30px] mb-6 w-full'>
+				{/* <div className='flex items-center justify-center gap-4 mt-[30px] mb-6 w-full'>
 				<span className='border border-secondary-transparentBlack30 w-full max-w-[140px]'></span>
 				<span className='font-medium text-sm text-nowrap text-secondary-transparentBlack30'>
 					Or sign in with
@@ -108,7 +108,7 @@ const SignIn = () => {
 				<GoogleIcon />
 				<FacebookIcon />
 				<AppleIcon />
-				</div>
+				</div> */}
 
 				<NavLink
 				to={'/forgot-password'}
