@@ -5,7 +5,7 @@ import ClientTabs from "@/resuable/ClientTabs";
 export const dashboardTabs = (clients: any[], brands: any[]) => [
      {
         name: "brands",
-        title: "brands",
+        title: "world",
         tabContent : <BrandTabs brands={brands} />
     },
     {
