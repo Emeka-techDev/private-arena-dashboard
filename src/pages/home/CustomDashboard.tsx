@@ -114,10 +114,10 @@ const CustomDashboard = () => {
             }
         };
 
+        fetchBrands();
         fetchCardData();
 
-        fetchBrands();
-    }, []);
+    }, [campaignId]);
 
     const handleCampaignChange = async (id: string) => {
         try {

@@ -219,6 +219,10 @@ export default function ParticipantList( { id }: ParticipantsInputProps ) {
     id && console.log(`Campaign ID for participants list is: ${id}`);
 		const fetchParticpantsData = async () => {
 			try {
+        if (!id) {
+          console.log("No campaign ID provided, skipping fetch.");
+          return;
+        }
 				const response = await getCampaignParticipantsData(id);
 				updateFromResponse(response.data);
 			} catch (e) {
@@ -239,7 +243,7 @@ export default function ParticipantList( { id }: ParticipantsInputProps ) {
 		// };
 
 		// fetchParticpantsData();
-	}, [])
+	}, [id])
 
   return (
     <div className={`${bgPrimary} mt-10  flex flex-col`}>
