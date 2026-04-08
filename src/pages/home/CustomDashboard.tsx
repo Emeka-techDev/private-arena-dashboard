@@ -80,8 +80,9 @@ const CustomDashboard = () => {
     }, []);
 
    
-
+let manuallySetCampaignId = '';
     useEffect(() => {
+
         const fetchBrands = async () => {
             try {
                 setLoading(true);
@@ -91,6 +92,7 @@ const CustomDashboard = () => {
                 setCampaigns(response.data.campaigns);
                 setCampaignId(response.data.campaigns[0]?.id || "");
                 setCampaign(response.data.campaigns[0] || {});
+				manuallySetCampaignId = response.data.campaigns[0]?.id || "";
                
             } catch (e) {
                 console.log(e);
@@ -347,7 +349,7 @@ const CustomDashboard = () => {
 			)}
 
 			<ParticipantList
-				id={campaignId || ""}
+				id={campaignId || manuallySetCampaignId}
 			/>
         </div>
     )
