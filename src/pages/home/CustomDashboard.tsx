@@ -106,10 +106,10 @@ const CustomDashboard = () => {
                 if (campaignId === "") return;
                 const card = await getCampaignCardData(campaignId);
                 setCardData(card.data);
+                setLoading(false);
                 
             } catch (e) {
-                console.log(e);
-            } finally {
+				console.log(e);
                 setLoading(false);
             }
         };
