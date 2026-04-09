@@ -1,4 +1,4 @@
-import { getCampaignCardData, getCustomCampaignData, getUserBrand } from "@/apis/api";
+import { getCustomCampaignData } from "@/apis/api";
 import { useTheme } from "@/context/ThemeContext";
 import { AnimatedNumberProps, CampaignDropDownProps } from "@/utils/types";
 import { useEffect, useState } from "react";
