@@ -1,4 +1,4 @@
-import { getCampaignCardData, getUserBrand } from "@/apis/api";
+import { getCampaignCardData, getCustomCampaignData, getUserBrand } from "@/apis/api";
 import { useTheme } from "@/context/ThemeContext";
 import { AnimatedNumberProps, CampaignDropDownProps } from "@/utils/types";
 import { useEffect, useState } from "react";
@@ -83,17 +83,16 @@ const CustomDashboard = () => {
 let manuallySetCampaignId = '';
     useEffect(() => {
 
-        const fetchBrands = async () => {
+        const fetchCardData = async () => {
             try {
                 setLoading(true);
-                const response = await getUserBrand();
+                const response = await getCustomCampaignData();
+				setCardData(response.data);
+				setCampaigns(response.data.campaigns);
+				setCampaign(response.data.campaigns[0]);
+                setCampaignId(response.data.campaign_id || "");
+                setLoading(false)
                 console.log(response);
-               
-                setCampaigns(response.data.campaigns);
-                setCampaignId(response.data.campaigns[0]?.id || "");
-                setCampaign(response.data.campaigns[0] || {});
-				manuallySetCampaignId = response.data.campaigns[0]?.id || "";
-               
             } catch (e) {
                 console.log(e);
             } finally {
@@ -101,35 +100,21 @@ let manuallySetCampaignId = '';
             }
         }
 
-
-        const fetchCardData = async () => {
-            try {
-                setLoading(true);
-                if (campaignId === "") return;
-                const card = await getCampaignCardData(campaignId);
-                setCardData(card.data);
-                setLoading(false);
-                
-            } catch (e) {
-				console.log(e);
-                setLoading(false);
-            }
-        };
-
-        fetchBrands();
         fetchCardData();
 
     }, [campaignId]);
 
-    const handleCampaignChange = async (id: string) => {
+    const handleCampaignChange = async (id: string, title:string) => {
         try {
             setLoading(true);
 
             setCampaignId(id);
             
-            const card = await getCampaignCardData(campaignId);
+            const card = await getCustomCampaignData(campaignId);
 
             setCardData(card.data);
+            setCampaign({ id, title });
+
 
                 
         } catch (e) {
@@ -172,7 +157,7 @@ let manuallySetCampaignId = '';
                                 <div
                                     key={campaign.id}
                                     className="px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 cursor-pointer transition-colors border-b border-gray-100 last:border-b-0"
-                                    onClick={() => handleCampaignChange(campaign.id)}
+                                    onClick={() => handleCampaignChange(campaign.id, campaign.title)}
                                 >
                                     {campaign.title}
                                 </div>

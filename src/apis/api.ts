@@ -56,6 +56,27 @@ export const changePassword = async (payload: changePasswordRequest) => {
     return response.data;
 }
 
+export const getCustomCampaignData = async (campaignId?: string) => {
+    const token = localStorage.getItem("authToken");
+
+    const response = await api.get(
+        "brand-campaign/customcard-data",
+        {
+        headers: {
+            Accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+            'Content-Type' :  'application/json'
+        },
+        params: {
+            campaign_id: campaignId, 
+        },
+        }
+    );
+
+    return response.data;
+}
+
+
 export const getUserBrand = async () => {
     const token = localStorage.getItem("authToken");
 
