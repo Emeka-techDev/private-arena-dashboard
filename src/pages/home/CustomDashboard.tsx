@@ -1,10 +1,11 @@
-import { getCustomCampaignData } from "@/apis/api";
+import { getCustomCampaignData, getCampaignParticipantsData } from "@/apis/api";
 import { useTheme } from "@/context/ThemeContext";
 import { AnimatedNumberProps, CampaignDropDownProps } from "@/utils/types";
 import { useEffect, useState } from "react";
 import ParticipantList from "./ParticipantList";
-
-
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
 
 
 function AnimatedNumber({ target, duration = 1000 }: AnimatedNumberProps) {
@@ -54,6 +55,7 @@ const CustomDashboard = () => {
 
 	const [visible, setVisible] = useState<boolean>(false);
 	const [loading, setLoading] = useState(true);
+	const [isExporting, setIsExporting] = useState(false);
 	const [cardData, setCardData] = useState<CardDataInterface> ({
 		abandon_and_returned : 0,
 		avg_completion_time : 0,
@@ -109,20 +111,84 @@ let manuallySetCampaignId = '';
             setLoading(true);
 
             setCampaignId(id);
-            
+
             const card = await getCustomCampaignData(campaignId);
 
             setCardData(card.data);
             setCampaign({ id, title });
 
 
-                
+
         } catch (e) {
             console.log(e);
         } finally {
             setLoading(false);
         }
     };
+
+    const handleExportAllData = async () => {
+        try {
+
+			if (!campaign || !cardData) return;
+
+			toast.info("exporting data");
+			setIsExporting(true);
+            const wb = XLSX.utils.book_new();
+
+            // Sheet 1: Summary
+            const summaryData = [
+                ["Campaign", campaign?.title || ""],
+                ["Total Participants", cardData.total_participants],
+                ["Completed", cardData.total_completed],
+                ["Completed %", cardData.total_completed_percentage],
+                ["In Progress", cardData.total_in_progress],
+                ["In Progress %", cardData.total_in_progress_percentage],
+                ["Abandoned", cardData.total_abandoned],
+                ["Abandoned %", cardData.total_abandoned_percentage],
+                ["Abandoned & Returned", cardData.abandon_and_returned],
+                ["Avg. Completion Time (mins)", cardData.avg_completion_time],
+            ];
+            const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
+            summarySheet["!cols"] = [{ wch: 28 }, { wch: 20 }];
+            XLSX.utils.book_append_sheet(wb, summarySheet, "Summary");
+
+            // Sheet 2: Participants
+            if (campaignId) {
+                const res = await getCampaignParticipantsData(campaignId);
+                const participants = res.data?.participants || [];
+
+                const participantRows = participants.map((p: any) => ({
+                    Name: p.name,
+                    Email: p.email,
+                    Phone: p.phone,
+                    Status: p.status,
+                    Location: p.location,
+                    "Date Joined": p.date_joined,
+                }));
+
+                const participantsSheet = XLSX.utils.json_to_sheet(participantRows);
+                participantsSheet["!cols"] = [
+                    { wch: 25 }, { wch: 30 }, { wch: 18 },
+                    { wch: 14 }, { wch: 20 }, { wch: 16 },
+                ];
+                XLSX.utils.book_append_sheet(wb, participantsSheet, "Participants");
+            }
+
+            const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+            const blob = new Blob([buf], { type: "application/octet-stream" });
+            const fileName = `${(campaign?.title || "dashboard").replace(/\s+/g, "_")}_export.xlsx`;
+            saveAs(blob, fileName);
+			toast.success("data exported successfully");
+        } catch (e) {
+			console.error("Export failed:", e);
+			toast.error("failed to export data");
+        }
+		finally {
+			setIsExporting(false);
+		}
+    };
+
+
 
     return (
         <div className={`${bgPrimary} min-h-screen  font-sans md:p-10}`}>
@@ -188,12 +254,14 @@ let manuallySetCampaignId = '';
 							Active
 							</span>
 							<span className="text-sm text-slate-500">Jan 10 – Apr 10, 2025</span>
-							<button className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-slate-300 rounded-lg bg-[#EEEDFE] hover:bg-slate-50 transition-colors text-slate-700 shadow-sm">
-							Export all data ↓
+							<button
+								onClick={handleExportAllData}
+
+								className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-slate-300 rounded-lg bg-[#EEEDFE] hover:bg-slate-50 transition-colors text-slate-700 shadow-sm">
+								{isExporting ? 'Exporting...' : ' Export all data ↓' } 
 							</button>
 						</div>
 					</div>
-					
 				</div>
 			</div>
 
