@@ -151,7 +151,7 @@ function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: strin
 
 interface ParticipantsInputProps {
   id: string
-  title: string
+  title?: string
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
