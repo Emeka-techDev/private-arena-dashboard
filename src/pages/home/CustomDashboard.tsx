@@ -404,6 +404,7 @@ let manuallySetCampaignId = '';
 
 			<ParticipantList
 				id={campaignId || manuallySetCampaignId}
+				title={campaign?.title || "dashboar"}
 			/>
         </div>
     )

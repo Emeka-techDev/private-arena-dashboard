@@ -2,6 +2,11 @@ import { getCampaignParticipantsData } from "@/apis/api";
 import { useTheme } from "@/context/ThemeContext";
 import { ParticipantsProps } from "@/utils/types";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+import * as XLSX from "xlsx";
+
+import { saveAs } from "file-saver";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 type Status = "all" | "completed" | "in_progress" | "abandoned";
@@ -146,13 +151,15 @@ function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: strin
 
 interface ParticipantsInputProps {
   id: string
+  title: string
 }
 
 // ── Main Component ────────────────────────────────────────────────────────────
-export default function ParticipantList( { id }: ParticipantsInputProps ) {
+export default function ParticipantList( { id, title }: ParticipantsInputProps ) {
   const [activeTab, setActiveTab] = useState<Status>("all");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [isExportingParticipant, setIsExportingParticipant] = useState(false);
 
   
 	const [participantsData, setParticipantsData] = useState<ParticipantsProps[]>();
@@ -215,6 +222,48 @@ export default function ParticipantList( { id }: ParticipantsInputProps ) {
     setPage(1);
   };
 
+
+   const handlePartcipantsExport = async () => {
+      try {
+  
+  
+        toast.info("exporting Participant data");
+        setIsExportingParticipant(true);
+        const wb = XLSX.utils.book_new();
+        const participants = participantsData || [];
+
+        const participantRows = participants.map((p: any) => ({
+            Name: p.name,
+            Email: p.email,
+            Phone: p.phone,
+            Status: p.status,
+            Location: p.location,
+            "Date Joined": p.date_joined,
+        }));
+
+        const participantsSheet = XLSX.utils.json_to_sheet(participantRows);
+        participantsSheet["!cols"] = [
+            { wch: 25 }, { wch: 30 }, { wch: 18 },
+            { wch: 14 }, { wch: 20 }, { wch: 16 },
+        ];
+        XLSX.utils.book_append_sheet(wb, participantsSheet, "Participants");
+    
+  
+        const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+        const blob = new Blob([buf], { type: "application/octet-stream" });
+        const fileName = `${(title || "dashboard").replace(/\s+/g, "_")}_export.xlsx`;
+        saveAs(blob, fileName);
+        toast.success("data exported successfully");
+          } catch (e) {
+        console.error("Export failed:", e);
+        toast.error("failed to export data");
+          }
+      finally {
+        setIsExportingParticipant(false);
+      }
+  };
+  
+  
   useEffect(() => {
     id && console.log(`Campaign ID for participants list is: ${id}`);
 		const fetchParticpantsData = async () => {
@@ -258,11 +307,13 @@ export default function ParticipantList( { id }: ParticipantsInputProps ) {
               <h1 className={`text-lg font-bold tracking-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>Participant list</h1>
               <p className="text-xs text-slate-400 mt-0.5">Showing {filtered?.length ?? 0} of {tabCounts.all.toLocaleString()}</p>
             </div>
-            <button className={`flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-xl transition-colors ${isDark ? "text-slate-300 bg-white/10 hover:bg-white/15" : "text-slate-600 bg-slate-100 hover:bg-slate-200"}`}>
+            <button
+              onClick={handlePartcipantsExport}
+              className={`flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-xl transition-colors ${isDark ? "text-slate-300 bg-white/10 hover:bg-white/15" : "text-slate-600 bg-slate-100 hover:bg-slate-200"}`}>
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
               </svg>
-              Export
+              {isExportingParticipant ? "Exporting..." : "Export" }
             </button>
           </div>
 
