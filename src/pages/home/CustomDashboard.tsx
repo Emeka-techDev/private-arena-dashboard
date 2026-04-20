@@ -38,6 +38,7 @@ function AnimatedNumber({ target, duration = 1000 }: AnimatedNumberProps) {
 interface CardDataInterface {
     abandon_and_returned : number,
     avg_completion_time : number,
+    avg_completion_time_unit : string,
     total_abandoned : number,
     total_abandoned_percentage : number,
     total_completed : number,
@@ -60,6 +61,7 @@ const CustomDashboard = () => {
 	const [cardData, setCardData] = useState<CardDataInterface> ({
 		abandon_and_returned : 0,
 		avg_completion_time : 0,
+		avg_completion_time_unit : "mins",
 		total_abandoned : 0,
 		total_abandoned_percentage : 0,
 		total_completed : 0,
@@ -147,7 +149,8 @@ let manuallySetCampaignId = '';
                 ["Abandoned", cardData.total_abandoned],
                 ["Abandoned %", cardData.total_abandoned_percentage],
                 ["Abandoned & Returned", cardData.abandon_and_returned],
-                ["Avg. Completion Time (mins)", cardData.avg_completion_time],
+                ["Avg. Completion Time ", cardData.avg_completion_time],
+                ["Avg. Completion Time unit", cardData.avg_completion_time_unit],
             ];
             const summarySheet = XLSX.utils.aoa_to_sheet(summaryData);
             summarySheet["!cols"] = [{ wch: 28 }, { wch: 20 }];
@@ -363,7 +366,7 @@ let manuallySetCampaignId = '';
 					</p>
 					<p className={`text-3xl font-bold leading-none text-slate-500`}>
 						<AnimatedNumber target={cardData.avg_completion_time} />
-						<span className="text-lg font-medium ml-1">mins</span>
+						<span className="text-lg font-medium ml-1">{cardData.avg_completion_time_unit}</span>
 					</p>
 					<p className="text-xs text-slate-400 mt-2">Across completions</p>
 				</div>
