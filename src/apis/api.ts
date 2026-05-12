@@ -2,7 +2,7 @@ import {changePasswordRequest, loginUserRequest, signUpUserRequest } from "@/uti
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "https://srv940199.hstgr.cloud/api/users/",
+    baseURL: "https://srv1653329.hstgr.cloud/api/users/",
 //   baseURL: "http://127.0.0.1:8000/api/users/",
     headers: {
         "Content-Type": "application/json",
